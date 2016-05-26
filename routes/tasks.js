@@ -15,7 +15,7 @@ module.exports = app => {
      * @apiSuccess {Boolean} tasks.done Task is done?
      * @apiSuccess {Date} tasks.updated_at Update's date
      * @apiSuccess {Date} tasks.created_at Register's date
-     * @apiSuccess {Number} tasks.user_id User id
+     * @apiSuccess {Number} tasks.UserId User id
      * @apiSuccessExample {json} Success
      *    HTTP/1.1 200 OK
      *    [{
@@ -24,14 +24,14 @@ module.exports = app => {
      *      "done": false,
      *      "updated_at": "2016-02-10T15:46:51.778Z",
      *      "created_at": "2016-02-10T15:46:51.778Z",
-     *      "user_id": 1
+     *      "UserId": 1
      *    }]
      * @apiErrorExample {json} List error
      *    HTTP/1.1 412 Precondition Failed
      */
     .get((req, res) => {
       Tasks.findAll({
-        where: { user_id: req.user.id }
+        where: { UserId: req.user.id }
       })
       .then(result => res.json(result))
       .catch(error => {
@@ -52,7 +52,7 @@ module.exports = app => {
      * @apiSuccess {Boolean} done false Task is done?
      * @apiSuccess {Date} updated_at Update's date
      * @apiSuccess {Date} created_at Register's date
-     * @apiSuccess {Number} user_id User id
+     * @apiSuccess {Number} UserId User id
      * @apiSuccessExample {json} Success
      *    HTTP/1.1 200 OK
      *    {
@@ -61,13 +61,13 @@ module.exports = app => {
      *      "done": false,
      *      "updated_at": "2016-02-10T15:46:51.778Z",
      *      "created_at": "2016-02-10T15:46:51.778Z",
-     *      "user_id": 1
+     *      "UserId": 1
      *    }
      * @apiErrorExample {json} Register error
      *    HTTP/1.1 412 Precondition Failed
      */
     .post((req, res) => {
-      req.body.user_id = req.user.id;
+      req.body.UserId = req.user.id;
       Tasks.create(req.body)
         .then(result => res.json(result))
         .catch(error => {
@@ -89,7 +89,7 @@ module.exports = app => {
      * @apiSuccess {Boolean} done Task is done?
      * @apiSuccess {Date} updated_at Update's date
      * @apiSuccess {Date} created_at Register's date
-     * @apiSuccess {Number} user_id User id
+     * @apiSuccess {Number} UserId User id
      * @apiSuccessExample {json} Success
      *    HTTP/1.1 200 OK
      *    {
@@ -98,7 +98,7 @@ module.exports = app => {
      *      "done": false
      *      "updated_at": "2016-02-10T15:46:51.778Z",
      *      "created_at": "2016-02-10T15:46:51.778Z",
-     *      "user_id": 1
+     *      "UserId": 1
      *    }
      * @apiErrorExample {json} Task not found error
      *    HTTP/1.1 404 Not Found
@@ -108,7 +108,7 @@ module.exports = app => {
     .get((req, res) => {
       Tasks.findOne({ where: {
         id: req.params.id,
-        user_id: req.user.id
+        UserId: req.user.id
       }})
       .then(result => {
         if (result) {
@@ -143,7 +143,7 @@ module.exports = app => {
     .put((req, res) => {
       Tasks.update(req.body, { where: {
         id: req.params.id,
-        user_id: req.user.id
+        UserId: req.user.id
       }})
       .then(result => res.sendStatus(204))
       .catch(error => {
@@ -165,7 +165,7 @@ module.exports = app => {
     .delete((req, res) => {
       Tasks.destroy({ where: {
         id: req.params.id,
-        user_id: req.user.id
+        UserId: req.user.id
       }})
       .then(result => res.sendStatus(204))
       .catch(error => {
